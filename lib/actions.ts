@@ -16,18 +16,13 @@ export type ConfessionData = {
   userVote: number;
 }
 export async function getUserId() {
+  "use server"
   const cookieStore = await cookies();
 
   let userId = cookieStore.get("userId")?.value;
 
   if (!userId) {
     userId = nanoid()
-
-    cookieStore.set('userId', userId, {
-      maxAge: 60 * 60 * 24 * 365 * 10, // 10 tahun
-      path: '/',
-      sameSite: 'strict'
-    })
   }
 
   return userId;
