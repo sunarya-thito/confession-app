@@ -1,6 +1,7 @@
 import {cookies} from "next/headers";
 import {prisma} from "@/lib/db";
 import {revalidatePath} from "next/cache";
+import {nanoid} from "nanoid";
 
 export type ConfessionData = {
   id: number;
@@ -17,10 +18,16 @@ export type ConfessionData = {
 export async function getUserId() {
   const cookieStore = await cookies();
 
-  const userId = cookieStore.get("userId")?.value;
+  let userId = cookieStore.get("userId")?.value;
 
   if (!userId) {
-    throw new Error('Please refresh your browser')
+    userId = nanoid()
+
+    cookieStore.set('userId', userId, {
+      maxAge: 60 * 60 * 24 * 365 * 10, // 10 tahun
+      path: '/',
+      sameSite: 'strict'
+    })
   }
 
   return userId;
