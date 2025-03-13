@@ -15,16 +15,7 @@ import {
   voteConfession
 } from "@/lib/actions";
 import {VoteButtons} from "@/components/vote-buttons";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from "@/components/ui/dialog";
+import {Dialog, DialogTrigger} from "@/components/ui/dialog";
 import ConfessionDeleteDialog from "@/components/confession-delete-dialog";
 
 type HomeSearchParams = {

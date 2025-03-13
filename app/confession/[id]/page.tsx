@@ -1,4 +1,4 @@
-import {notFound, redirect} from "next/navigation";
+import {notFound} from "next/navigation";
 import {deleteConfession, getConfession, getReplies, getUserId, replyConfession, voteConfession} from "@/lib/actions";
 import {Button} from "@/components/ui/button";
 import {ArrowLeft, Trash, User} from "lucide-react";
