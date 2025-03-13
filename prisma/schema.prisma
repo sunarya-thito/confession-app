@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Confession {
+  id Int @id @default(autoincrement())
+  rootParentId Int?
+  rootParent Confession? @relation("rootParent", fields: [rootParentId], references: [id])
+  parentId Int?
+  parent Confession? @relation("parent", fields: [parentId], references: [id])
+  content String
+  alias String?
+  userId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  votes ConfessionVote[]
+  replies Confession[] @relation("parent")
+  allReplies Confession[] @relation("rootParent")
+}
+
+
+model ConfessionVote {
+  userId String
+  confessionId Int
+  confession Confession @relation(fields: [confessionId], references: [id])
+  weight Int
+  updatedAt DateTime @default(now())
+
+  @@id([userId, confessionId])
+}
